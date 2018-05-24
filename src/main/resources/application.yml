@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: cloud-bootstrap
+
+---
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_development
+    username: root
+    password: root
+
+---
+spring:
+  jpa:
+    generate-ddl: true
+    show-sql: true
