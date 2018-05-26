@@ -3,6 +3,7 @@ package com.spring.cart.springbootangular.controller;
 import com.spring.cart.springbootangular.entity.Category;
 import com.spring.cart.springbootangular.request.CreateCategoryRequest;
 import com.spring.cart.springbootangular.request.GetDetailsByCategoryRequest;
+import com.spring.cart.springbootangular.request.UpdateByCategoryRequest;
 import com.spring.cart.springbootangular.response.ErrorReponse;
 import com.spring.cart.springbootangular.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -45,6 +47,20 @@ public class ControllerCategory {
         return Optional.ofNullable(categoryService.createNewCategory(request))
                 .map(callbackJSON -> new ResponseEntity<>(callbackJSON, HttpStatus.CREATED))
                 .orElse(new ResponseEntity<Category>(HttpStatus.BAD_REQUEST));
+    }
+
+    @PostMapping(value = "/update")
+    public ResponseEntity<Category> update(@Valid @RequestBody UpdateByCategoryRequest request){
+        return Optional.ofNullable(categoryService.updateCategory(request))
+                .map(callbackJSON -> new ResponseEntity<>(callbackJSON, HttpStatus.OK))
+                .orElse(new ResponseEntity<Category>(HttpStatus.BAD_REQUEST));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Category>> list(){
+        return Optional.ofNullable(categoryService.listCategory())
+                .map(callbackJSON -> new ResponseEntity<>(callbackJSON, HttpStatus.OK))
+                .orElse(new ResponseEntity<List<Category>>(HttpStatus.BAD_REQUEST));
     }
 
     @ExceptionHandler
